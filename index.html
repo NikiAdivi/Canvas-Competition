@@ -1,5 +1,5 @@
 <html>
-
+<meta charset="utf-8" />
 <body onload="canvas.setup()">
     <canvas id="canvasArea" style="position: absolute; left: 0; top: 0; z-index: 0; width:100%;height:100%"></canvas>
     <script src="./canvas.js"></script>
@@ -7,26 +7,265 @@
 
 </html>
 <script>
-
+    //Author- Arpitha Malavalli,Nikitha Adivi
     // Declare all global variables here
-
-    // Declare custom functions here
-
-    // Function while will be called repeatedly 
-    function main() {
-        canvas.clear();
-        
+    var pos_x;
+    var pos_y
+    var matrix=[];
+    for(var i=0;i<15;i++)
+    {matrix[i]=new Array(9);}
+   for(var i=0;i<15;i++)
+    {
+      for(var j=0;j<9;j++)
+      {
+        matrix[i][j]=0;
+      }
     }
 
-    // Override functions here; 
-    canvas.mainFunction = main;
+    //Initialising some global variables .Overriding the setupFunction
+    function setup() {
+        pos_x= canvas.width*0.4;
+        pos_y=canvas.height*0;
+        i=0;
+      }
 
-    var timeStep = 50;
+      class shapes{
+         constructor(no){
+           this.no=no;
+
+         }
+       }
+       class type1 extends shapes
+       {
+         constructor(no)
+         {
+           super(no);
+           this.row=0;
+           this.col=4;
+
+         }
+         downXY()
+         {
+           if(this.row!=14)
+           this.row=this.row+1;
+         }
+         MoveXY(x,y)
+         {
+           if(this.row+x>0&&this.row<14&&this.col>0&&this.col<8)
+           {
+           this.row=this.row+x;
+           this.col=this.col+y;
+         }
+         }
+         DetectCollision(matrix)
+         {
+           if(matrix[this.row+1][this.col]!=0||this.row+1==14)
+           {
+             chageMatrix(matrix);
+           }
+         }
+         changeMatrix(matrix)
+         {
+           matrix[this.row][this.col]=1;
+         }
+       }
+      class type2 extends shapes
+       {
+         constructor(no)
+         {
+           super(no);
+           this.row=0;
+           this.col=4;
+
+         }
+         downXY()
+         {
+
+          if(this.row!=0)
+          {
+             matrix[this.row-1][this.col]=0;
+             matrix[this.row-1][this.col+1]=0;
+           }
+           if(one.DetectCollision()){
+             one=new type2(2);
+           }
+           if(this.row!=14)
+          {
+           this.row=this.row+1;
+          }
+         }
+         MoveXY(x,y)
+         {
+           if(this.row+x>0&&this.row<14&&this.col>0&&this.col<8)
+           {
+           if(y<0)
+           matrix[this.row-1][this.col+1]=0;
+           else {
+             matrix[this.row-1][this.col]=0;
+           }
+           this.row=this.row+x;
+           this.col=this.col+y;
+         }
+         }
+         DetectCollision()
+         {
+           if(this.row+1==15)
+           {
+             return 1;
+           }
+           else if(matrix[this.row+1][this.col]!=0||matrix[this.row+1][this.col+1]!=0)
+           {
+             return 1;
+           }
+        }
+         changeMatrix(matrix)
+         {
+           matrix[this.row][this.col]=1;
+           matrix[this.row][this.col+1]=1
+         }
+       }
+       class type3 extends shapes
+       {
+         constructor(no)
+         {
+           super(no);
+           this.row=0;
+           this.col=4;
+
+         }
+         downXY()
+         {
+           if(this.row!=14)
+           this.row=this.row+1;
+         }
+         MoveXY(x,y)
+         {
+           if(this.row+x>0&&this.row<14&&this.col>0&&this.col<8)
+           {
+           this.row=this.row+x;
+           this.col=this.col+y;
+         }
+         }
+         DetectCollision(matrix)
+         {
+           if(matrix[this.row+1][this.col]!=0||matrix[this.row+1][this.col+1]!=0||matrix[this.row+1][this.col+2]!=0||this.row+1==14)
+           {
+             chageMatrix(matrix);
+           }
+         }
+         changeMatrix(matrix)
+         {
+           matrix[this.row][this.col]=1;
+           matrix[this.row][this.col+1]=1
+           matrix[this.row][this.col+2]=1
+         }
+       }
+
+       class type4 extends shapes
+       {
+         constructor(no)
+         {
+           super(no);
+           this.row=0;
+           this.col=4;
+
+         }
+         downXY()
+         {
+           if(this.row!=14)
+           {
+           this.row=this.row+1;
+         }
+         }
+         MoveXY(x,y)
+         {
+           if(this.row+x>0&&this.row<14&&this.col>0&&this.col<8)
+           {
+           this.row=this.row+x;
+           this.col=this.col+y;
+         }
+         changeMatrix(matrix);
+         }
+         DetectCollision(matrix)
+         {
+           if(matrix[this.row+1][this.col+1]!=0||matrix[this.row+2][this.col]!=0||this.row+2==14)
+           {
+             chageMatrix(matrix);
+           }
+         }
+         changeMatrix(matrix)
+         {
+           matrix[this.row][this.col]=1;
+           matrix[this.row][this.col+1]=1
+           matrix[this.row+1][this.col]=1
+         }
+       }
+
+
+    function DrawGrid(matrix)
+    {
+      canvas.setDrawMode("fill");
+      //canvas.setColor("black");
+      //canvas.DrawRectangle(canvas.width*0.4,canvas.height*0,canvas.height*0.45,canvas.height);
+      //canvas.setDrawMode("stroke");
+      pos_y=0;
+      for(var i=0;i<15;i++)
+      {
+        pos_x=canvas.width*0.4;
+        for(var j=0;j<9;j++)
+        {
+
+          if(matrix[i][j]==1)
+          {
+            // console.log("red:",i,j);
+            canvas.setColor("yellow");
+            console.log(pos_x,pos_y);
+            canvas.drawRectangle(pos_x,pos_y,canvas.height*0.05,canvas.height*0.067);
+            pos_x=pos_x+canvas.height*0.05;
+          }
+          if(matrix[i][j]==0) {
+            canvas.setColor("black");
+            // console.log("black",i,j);
+            canvas.drawRectangle(pos_x,pos_y,canvas.height*0.05,canvas.height*0.067);
+            pos_x=pos_x+canvas.height*0.05;
+          }
+
+        }
+        pos_y=pos_y+canvas.height*0.067;
+      }
+
+    }
+
+    var one=new type2(2);
+    // Function while will be called repeatedly
+    function main() {
+      one.changeMatrix(matrix);
+      one.downXY();
+      DrawGrid(matrix);
+      // canvas.setTimeout(function(),30);
+
+    }
+
+    canvas.keyDownCallback=function(e){
+    if(e.which==37)
+    {
+      one.MoveXY(0,-1);
+
+    }
+    if(e.which==39)
+    {
+      one.MoveXY(0,1);
+
+    }
+    }
+
+    // Override functions here;
+    canvas.mainFunction = main;
+    canvas.setupFunction = setup;
+
+    var timeStep = 200;
     canvas.startMain(timeStep);
 
 
-    
+
 </script>
-
-
-
